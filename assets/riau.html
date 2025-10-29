@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1e3a8a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pengiriman">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Konfirmasi Pengiriman</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --accent: #60a5fa;
+            --light: #dbeafe;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #0ea5e9;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --safe-area-top: env(safe-area-inset-top);
+            --safe-area-bottom: env(safe-area-inset-bottom);
+        }
+        
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc;
+            color: var(--gray-800);
+            margin: 0;
+            padding: 0;
+            padding-top: var(--safe-area-top);
+            padding-bottom: calc(80px + var(--safe-area-bottom));
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .mobile-container {
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            padding-top: var(--safe-area-top);
+        }
+        
+        /* Responsive container for all screen sizes */
+        @media (max-width: 320px) {
+            .mobile-container {
+                padding: 0 8px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .mobile-container {
+                max-width: 600px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-container {
+                max-width: 800px;
+            }
+        }
+        
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, #2563eb 100%);
+            padding: 1.5rem 1rem;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+            position: relative;
+            overflow: hidden;
+            margin-top: var(--safe-area-top);
+        }
+        
+        .header-gradient::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-text {
+            flex: 1;
+            padding-right: 1rem;
+        }
+        
+        .header-text h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            letter-spacing: -0.02em;
+        }
+        
+        .header-text p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            font-weight: 300;
+        }
+        
+        /* Adjust header for smaller screens */
+        @media (max-width: 360px) {
+            .header-text h1 {
+                font-size: 1.3rem;
+            }
+            
+            .header-text p {
+                font-size: 0.75rem;
+            }
+        }
+        
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .header-icon:hover {
+            transform: scale(1.05);
+        }
+        
+        .header-icon i {
+            color: white;
+            font-size: 1.25rem;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.5rem;
+        }
+        
+        /* Adjust section title for smaller screens */
+        @media (max-width: 360px) {
+            .section-title {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        
+        .search-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--gray-200);
+            margin: 0 0.5rem 1.5rem;
+        }
+        
+        .search-bar i {
+            color: var(--gray-400);
+            font-size: 1rem;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            margin-left: 12px;
+            font-size: 1rem;
+            color: var(--gray-800);
+            padding: 4px 0;
+        }
+        
+        .search-bar input::placeholder {
+            color: var(--gray-400);
+        }
+        
+        /* Adjust search bar for smaller screens */
+        @media (max-width: 360px) {
+            .search-bar {
+                padding: 10px 12px;
+                margin: 0 0.25rem 1rem;
+            }
+            
+            .search-bar input {
+                font-size: 0.9rem;
+            }
+        }
+        
+        .shipments-container {
+            margin-top: 1rem;
+            padding: 0 0.5rem;
+        }
+        
+        .shipment-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-100);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            position: relative;
+        }
+        
+        .shipment-item:last-child {
+            border-bottom: none;
+        }
+        
+        .shipment-item:hover {
+            background-color: rgba(59, 130, 246, 0.03);
+        }
+        
+        .shipment-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .shipment-icon.blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--secondary);
+        }
+        
+        .shipment-icon.green {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .shipment-icon.purple {
+            background: rgba(139, 92, 246, 0.1);
+            color: #8b5cf6;
+        }
+        
+        .shipment-icon.yellow {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .shipment-details {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .shipment-details h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--gray-800);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .shipment-details .id {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+        
+        .shipment-details .items {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .shipment-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .shipment-qty {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .shipment-time {
+            font-size: 0.7rem;
+            color: var(--gray-400);
+        }
+        
+        /* Adjust shipment item for smaller screens */
+        @media (max-width: 360px) {
+            .shipment-item {
+                padding: 0.75rem;
+            }
+            
+            .shipment-details h3 {
+                font-size: 0.9rem;
+            }
+            
+            .shipment-details .id,
+            .shipment-details .items {
+                font-size: 0.75rem;
+            }
+            
+            .shipment-qty {
+                font-size: 0.75rem;
+            }
+            
+            .shipment-time {
+                font-size: 0.65rem;
+            }
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        
+        .status-proses {
+            background-color: rgba(251, 191, 36, 0.1);
+            color: #f59e0b;
+        }
+        
+        .status-selesai {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin: 0 0.5rem 1.5rem;
+            overflow: hidden;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 3px solid transparent;
+            font-size: 0.85rem;
+        }
+        
+        .tab.active {
+            color: var(--secondary);
+            border-bottom: 3px solid var(--secondary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .tab:not(.active):hover {
+            background: var(--gray-100);
+        }
+        
+        /* Adjust tabs for smaller screens */
+        @media (max-width: 360px) {
+            .tabs {
+                margin: 0 0.25rem 1rem;
+            }
+            
+            .tab {
+                padding: 8px 0;
+                font-size: 0.8rem;
+            }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-400);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 calc(8px + var(--safe-area-bottom)) 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray-400);
+            font-size: 0.7rem;
+            transition: all 0.2s;
+            padding: 0.5rem;
+            border-radius: 12px;
+            width: 20%;
+        }
+        
+        .nav-item.active {
+            color: var(--secondary);
+        }
+        
+        .nav-item:hover {
+            color: var(--secondary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .nav-icon {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(59, 130, 246, 0.2);
+            border-top: 3px solid var(--secondary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background-color: #fee2e2;
+            color: #ef4444;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Document status indicators */
+        .document-status {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .doc-indicator {
+            display: flex;
+            align-items: center;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            background: var(--gray-100);
+            white-space: nowrap;
+        }
+        
+        .doc-indicator.missing {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        .doc-indicator.complete {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .doc-indicator i {
+            margin-right: 0.25rem;
+            font-size: 0.6rem;
+        }
+        
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 95%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-400);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        
+        .modal-close:hover {
+            background: var(--gray-100);
+            color: var(--gray-500);
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .shipment-info {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-label {
+            font-weight: 500;
+            width: 100px;
+            color: var(--gray-500);
+            font-size: 0.85rem;
+        }
+        
+        .info-value {
+            flex: 1;
+            color: var(--gray-800);
+            font-size: 0.85rem;
+        }
+        
+        .upload-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .upload-section h4 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .file-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            background: #f8fafc;
+            font-size: 0.9rem;
+            display: none; /* Hide the file input */
+        }
+        
+        .file-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+        
+        .upload-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .upload-btn:hover {
+            background: #2563eb;
+        }
+        
+        .upload-btn:disabled {
+            background: var(--gray-400);
+            cursor: not-allowed;
+        }
+        
+        .camera-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--info);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .camera-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .camera-btn:hover {
+            background: #0284c7;
+        }
+        
+        .switch-camera-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--gray-500);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        
+        .switch-camera-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .switch-camera-btn:hover {
+            background: var(--gray-600);
+        }
+        
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .error-message-inline {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .info-message {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--secondary);
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Camera modal */
+        #camera {
+            width: 100%;
+            height: 60vh;
+            background: #000;
+            border-radius: 16px;
+            margin: 0 auto;
+            object-fit: cover;
+        }
+        
+        /* Remove old camera controls styles */
+        .camera-controls {
+            display: none;
+        }
+        
+        .camera-btn-control {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .capture-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+        }
+        
+        .cancel-btn {
+            background: var(--gray-400);
+            color: white;
+            border: none;
+        }
+        
+        /* Preview image styles */
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            display: block;
+        }
+        
+        .preview-container {
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+        
+        .preview-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .preview-link:hover {
+            text-decoration: underline;
+        }
+        
+        .preview-link i {
+            margin-right: 0.25rem;
+        }
+        
+        /* Document section with preview */
+        .document-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+        
+        .document-section h4 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .document-section h4 i {
+            color: var(--secondary);
+        }
+        
+        /* Document viewer modal */
+        .viewer-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .viewer-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .viewer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+        }
+        
+        .viewer-image {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+            object-fit: contain;
+        }
+        
+        .viewer-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .viewer-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+        
+        .viewer-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Camera selection */
+        .camera-selection {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .camera-option {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 12px;
+            background: var(--gray-100);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        
+        .camera-option.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        /* Cool modal layer design */
+        .modal-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .modal-layer.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-layer.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            color: white;
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+            color: white;
+        }
+        
+        /* Camera modal styles */
+        .camera-container {
+            position: relative;
+            width: 100%;
+            height: 65vh;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            background: #000;
+        }
+        
+        /* Camera video element */
+        #camera {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Camera capture button overlay */
+        .camera-capture-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .capture-button {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .capture-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .capture-button:active {
+            transform: scale(0.95);
+        }
+        
+        .capture-button-inner {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Camera controls at the bottom */
+        .camera-controls-bottom {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px 20px 20px;
+        }
+        
+        .camera-control-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .camera-control-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Responsive adjustments for different screen sizes */
+        @media (max-width: 360px) {
+            .modal-header h3 {
+                font-size: 1.1rem;
+            }
+            
+            .modal-body {
+                padding: 1rem;
+            }
+            
+            .camera-container {
+                height: 60vh;
+            }
+            
+            .camera-option {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .mobile-container {
+                padding: 0 1rem;
+            }
+            
+            .header-text h1 {
+                font-size: 1.75rem;
+            }
+            
+            .header-text p {
+                font-size: 0.95rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .shipment-details h3 {
+                font-size: 1rem;
+            }
+            
+            .shipment-details .id,
+            .shipment-details .items {
+                font-size: 0.85rem;
+            }
+            
+            .shipment-qty {
+                font-size: 0.85rem;
+            }
+            
+            .shipment-time {
+                font-size: 0.75rem;
+            }
+            
+            .tab {
+                font-size: 0.9rem;
+            }
+            
+            .nav-item {
+                font-size: 0.75rem;
+            }
+            
+            .nav-icon {
+                font-size: 1.25rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-container {
+                max-width: 800px;
+            }
+            
+            .camera-container {
+                height: 70vh;
+            }
+            
+            .viewer-content {
+                padding: 3rem;
+            }
+            
+            .viewer-image {
+                max-height: 75vh;
+            }
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary: #003366;
+                --secondary: #0066cc;
+                --dark: #000000;
+                --gray-800: #000000;
+                --gray-900: #000000;
+            }
+            
+            body {
+                background-color: #ffffff;
+                color: #000000;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --dark: #f1f5f9;
+                --gray-800: #f1f5f9;
+                --gray-900: #ffffff;
+            }
+            
+            body {
+                background-color: #0f172a;
+                color: #f1f5f9;
+            }
+            
+            .card {
+                background: #1e293b;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .search-bar {
+                background: #1e293b;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .search-bar input {
+                color: #f1f5f9;
+            }
+            
+            .shipment-info {
+                background: #334155;
+            }
+            
+            .document-section {
+                background: #334155;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container mx-auto min-h-screen">
+        <!-- Header -->
+        <div class="header-gradient">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>Konfirmasi Pengiriman</h1>
+                    <p>Kelola dokumen pengiriman</p>
+                </div>
+                <div class="header-icon" onclick="window.location.href='./pengiriman_riau.html'">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="px-4 py-6 -mt-6 relative z-10">
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Cari pengiriman...">
+            </div>
+            
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="riau" onclick="switchTab('riau')">Riau</div>
+            </div>
+            
+            <!-- Shipments List -->
+            <div class="shipments-container">
+                <h2 class="section-title">Pengiriman Perlu Konfirmasi</h2>
+                <div class="card" id="shipmentsList">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Memuat data pengiriman...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Upload Modal -->
+        <div id="uploadModal" class="modal-layer">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Upload Dokumen</h3>
+                    <button class="modal-close" onclick="closeUploadModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="shipmentInfo" class="shipment-info">
+                        <!-- Shipment info will be loaded here -->
+                    </div>
+                    
+                    <!-- BPB Section -->
+                    <div id="bpbSection" class="document-section">
+                        <h4><i class="fas fa-file-pdf"></i> BPB</h4>
+                        <div id="bpbContent">
+                            <!-- Content will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Documentation Section -->
+                    <div id="documentationSection" class="document-section">
+                        <h4><i class="fas fa-file-image"></i> Dokumentasi</h4>
+                        <div id="documentationContent">
+                            <!-- Content will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div id="uploadMessage"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Document Viewer Modal -->
+        <div id="viewerModal" class="modal-layer">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="viewer-title" id="viewerTitle">Dokumen</div>
+                    <button class="modal-close" onclick="closeViewerModal()">&times;</button>
+                </div>
+                <div class="modal-body viewer-content">
+                    <img id="viewerImage" class="viewer-image" src="" alt="Document Preview">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Camera Modal -->
+        <div id="cameraModal" class="modal-layer">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Ambil Foto Dokumentasi</h3>
+                    <button class="modal-close" onclick="closeCameraModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="camera-selection">
+                        <div class="camera-option active" data-camera="environment" onclick="switchCamera('environment')">Belakang</div>
+                        <div class="camera-option" data-camera="user" onclick="switchCamera('user')">Depan</div>
+                    </div>
+                    <div class="camera-container">
+                        <video id="camera" autoplay playsinline></video>
+                        <div class="camera-capture-overlay">
+                            <div class="capture-button" onclick="capturePhoto()">
+                                <div class="capture-button-inner"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="camera-controls-bottom">
+                        <button class="camera-control-button" onclick="switchCamera(currentCameraType === 'environment' ? 'user' : 'environment')">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button class="camera-control-button" onclick="closeCameraModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration
+        const CONFIG = {
+            // API endpoint - Update this to match your server IP when accessing from mobile devices
+            API_BASE_URL: 'https://irisout.nekadbanget.com/api', // Change this to your server's IP address
+            
+            // Fallback URLs for different environments
+            API_FALLBACK_URLS: [
+                'http://irisout.nekadbanget.com/api',
+                'http://irisout.nekadbanget.com/ap i' // Replace with your actual server IP
+            ],
+            
+            // Retry settings
+            MAX_RETRIES: 3,
+            RETRY_DELAY: 1000 // ms
+        };
+        
+        // Current active tab
+        let currentTab = 'riau';
+        let searchQuery = '';
+        let currentShipmentId = null;
+        let cameraStream = null;
+        let currentShipmentData = null;
+        let currentCameraType = 'environment'; // Default to rear camera
+        let currentDocumentType = null; // 'bpb' or 'documentation'
+        
+        // Get API base URL with fallback support
+        function getApiBaseUrl() {
+            return CONFIG.API_BASE_URL;
+        }
+        
+        // Switch between tabs
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update active tab UI
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Load shipments for the selected tab
+            loadShipments();
+        }
+        
+        // Format quantity
+        function formatQty(qty) {
+            return qty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        
+        // Load shipments from Express.js API
+        function loadShipments() {
+            const shipmentsList = document.getElementById('shipmentsList');
+            
+            // Show loading state
+            shipmentsList.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Memuat data pengiriman...</p>
+                </div>
+            `;
+            
+            // Build API URL with parameters
+            let url = `${getApiBaseUrl()}/mobile/pengiriman?tab=${currentTab}&filter=today`;
+            if (searchQuery) {
+                url += '&search=' + encodeURIComponent(searchQuery);
+            }
+            
+            // Fetch data from Express.js API
+            fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    renderShipments(data.data, shipmentsList);
+                } else {
+                    shipmentsList.innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Gagal memuat data: ${data.message}</p>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                shipmentsList.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Gagal memuat data pengiriman. Silakan periksa koneksi jaringan dan pastikan server API berjalan.</p>
+                        <p class="text-sm mt-2">Detail error: ${error.message}</p>
+                    </div>
+                `;
+            });
+        }
+        
+        // Render shipments to the DOM
+        function renderShipments(shipments, container) {
+            if (shipments.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Semua Dokumen Lengkap</h3>
+                        <p>Tidak ada pengiriman yang perlu konfirmasi</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            shipments.forEach((shipment, index) => {
+                // Determine icon color based on index
+                const iconColors = ['blue', 'green', 'purple', 'yellow'];
+                const iconColor = iconColors[index % iconColors.length];
+                
+                html += `
+                    <div class="shipment-item" onclick="openUploadModal('${shipment.id}', ${JSON.stringify(shipment).replace(/"/g, '&quot;')})">
+                        <div class="shipment-icon ${iconColor}">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="shipment-details">
+                            <h3>${shipment.toko}</h3>
+                            <p class="id">ID: ${shipment.id}</p>
+                            <p class="items">${shipment.produk} - ${shipment.jenis}</p>
+                            <div class="document-status">
+                                <span class="doc-indicator ${shipment.missing_bpb ? 'missing' : 'complete'}">
+                                    <i class="fas ${shipment.missing_bpb ? 'fa-times' : 'fa-check'}"></i>
+                                    BPB
+                                </span>
+                                <span class="doc-indicator ${shipment.missing_documentation ? 'missing' : 'complete'}">
+                                    <i class="fas ${shipment.missing_documentation ? 'fa-times' : 'fa-check'}"></i>
+                                    Dokumen
+                                </span>
+                            </div>
+                            <span class="status-badge status-${shipment.status}">${shipment.status === 'proses' ? 'Proses' : shipment.status === 'terkirim' ? 'Terkirim' : 'Selesai'}</span>
+                        </div>
+                        <div class="shipment-meta">
+                            <div class="shipment-qty">${formatQty(shipment.qty)} item</div>
+                            <div class="shipment-time">${shipment.time}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Open upload modal
+        function openUploadModal(shipmentId, shipmentData) {
+            currentShipmentId = shipmentId;
+            currentShipmentData = shipmentData;
+            
+            // Display shipment information
+            const info = `
+                <div class="info-row">
+                    <div class="info-label">ID:</div>
+                    <div class="info-value">${shipmentData.id}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Toko:</div>
+                    <div class="info-value">${shipmentData.toko}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Produk:</div>
+                    <div class="info-value">${shipmentData.produk}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Jenis:</div>
+                    <div class="info-value">${shipmentData.jenis}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Qty:</div>
+                    <div class="info-value">${formatQty(shipmentData.qty)} item</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Status:</div>
+                    <div class="info-value">${shipmentData.status}</div>
+                </div>
+            `;
+            document.getElementById('shipmentInfo').innerHTML = info;
+            
+            // Show document sections
+            showDocumentSections(shipmentData);
+            
+            document.getElementById('uploadModal').classList.add('active');
+        }
+        
+        // Show document sections with either upload forms or previews
+        function showDocumentSections(shipmentData) {
+            // Handle BPB section
+            const bpbContent = document.getElementById('bpbContent');
+            if (shipmentData.bpb_url) {
+                // Show preview if BPB exists
+                bpbContent.innerHTML = `
+                    <div class="preview-container">
+                        <button class="preview-link" onclick="viewDocument('${shipmentData.bpb_url}', 'BPB')">
+                            <i class="fas fa-eye"></i> Lihat BPB
+                        </button>
+                        <div class="upload-section">
+                            <input type="file" id="bpbFileInput" class="file-input" accept="image/*" onchange="handleFileUpload(event, 'bpb')">
+                            <button class="upload-btn" onclick="document.getElementById('bpbFileInput').click()">
+                                <i class="fas fa-upload"></i> Upload BPB dari File
+                            </button>
+                            <button class="camera-btn" onclick="openCamera('bpb')">
+                                <i class="fas fa-camera"></i> Ganti BPB dengan Kamera
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Show both camera and file upload buttons if BPB is missing
+                bpbContent.innerHTML = `
+                    <div class="upload-section">
+                        <input type="file" id="bpbFileInput" class="file-input" accept="image/*" onchange="handleFileUpload(event, 'bpb')">
+                        <button class="upload-btn" onclick="document.getElementById('bpbFileInput').click()">
+                            <i class="fas fa-upload"></i> Upload BPB dari File
+                        </button>
+                        <button class="camera-btn" onclick="openCamera('bpb')">
+                            <i class="fas fa-camera"></i> Ambil BPB dengan Kamera
+                        </button>
+                    </div>
+                `;
+            }
+            
+            // Handle Documentation section
+            const documentationContent = document.getElementById('documentationContent');
+            if (shipmentData.documentation_url) {
+                // Show preview if documentation exists
+                documentationContent.innerHTML = `
+                    <div class="preview-container">
+                        <button class="preview-link" onclick="viewDocument('${shipmentData.documentation_url}', 'Dokumentasi')">
+                            <i class="fas fa-eye"></i> Lihat Dokumentasi
+                        </button>
+                        <div class="upload-section">
+                            <input type="file" id="documentationFileInput" class="file-input" accept="image/*" onchange="handleFileUpload(event, 'documentation')">
+                            <button class="upload-btn" onclick="document.getElementById('documentationFileInput').click()">
+                                <i class="fas fa-upload"></i> Upload Dokumentasi dari File
+                            </button>
+                            <button class="camera-btn" onclick="openCamera('documentation')">
+                                <i class="fas fa-camera"></i> Ganti Dokumentasi dengan Kamera
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Show both camera and file upload buttons if documentation is missing
+                documentationContent.innerHTML = `
+                    <div class="upload-section">
+                        <input type="file" id="documentationFileInput" class="file-input" accept="image/*" onchange="handleFileUpload(event, 'documentation')">
+                        <button class="upload-btn" onclick="document.getElementById('documentationFileInput').click()">
+                            <i class="fas fa-upload"></i> Upload Dokumentasi dari File
+                        </button>
+                        <button class="camera-btn" onclick="openCamera('documentation')">
+                            <i class="fas fa-camera"></i> Ambil Dokumentasi dengan Kamera
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // View document in modal
+        function viewDocument(url, title) {
+            document.getElementById('viewerTitle').textContent = title;
+            document.getElementById('viewerImage').src = url;
+            document.getElementById('viewerModal').classList.add('active');
+        }
+        
+        // Close viewer modal
+        function closeViewerModal() {
+            document.getElementById('viewerModal').classList.remove('active');
+            document.getElementById('viewerImage').src = '';
+        }
+        
+        // Switch camera
+        function switchCamera(cameraType) {
+            // Update UI
+            document.querySelectorAll('.camera-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`[data-camera="${cameraType}"]`).classList.add('active');
+            
+            // Update current camera type
+            currentCameraType = cameraType;
+            
+            // Restart camera with new constraints
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                openCameraForCapture();
+            }
+        }
+        
+        // Open camera
+        function openCamera(documentType) {
+            currentDocumentType = documentType;
+            openCameraForCapture();
+            document.getElementById('cameraModal').classList.add('active');
+        }
+        
+        // Open camera for capture
+        function openCameraForCapture() {
+            // Stop any existing stream
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+            }
+            
+            // Set camera constraints to 720p resolution
+            const constraints = {
+                video: {
+                    facingMode: currentCameraType,
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }
+            };
+            
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then(stream => {
+                    cameraStream = stream;
+                    const video = document.getElementById('camera');
+                    video.srcObject = stream;
+                })
+                .catch(error => {
+                    console.error('Error accessing camera:', error);
+                    showMessage('Tidak dapat mengakses kamera. Pastikan izin kamera telah diberikan.', 'error');
+                });
+        }
+        
+        // Close camera modal
+        function closeCameraModal() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            document.getElementById('cameraModal').classList.remove('active');
+        }
+        
+        // Capture photo
+        function capturePhoto() {
+            // First get geolocation data
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    // Successfully got geolocation, now capture photo
+                    capturePhotoWithLocation(position.coords.latitude, position.coords.longitude);
+                }, function(error) {
+                    // Failed to get geolocation, capture photo without it
+                    console.error('Geolocation error:', error);
+                    capturePhotoWithLocation(null, null);
+                }, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 60000
+                });
+            } else {
+                // Browser doesn't support geolocation, capture photo without it
+                capturePhotoWithLocation(null, null);
+            }
+        }
+        
+        // Capture photo with geolocation data and upload to Express.js API
+        // This function matches the Express.js API route:
+        // POST /api/pengiriman/:id/upload-dokumentasi
+        // Field name: dokumentasi_file
+        function capturePhotoWithLocation(latitude, longitude) {
+            const video = document.getElementById('camera');
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0);
+            
+            // Add watermark
+            addWatermark(context, canvas.width, canvas.height, latitude, longitude);
+            
+            canvas.toBlob(blob => {
+                // Create FormData object to send the image
+                const formData = new FormData();
+                
+                // Add geolocation data if available
+                if (latitude !== null && longitude !== null) {
+                    formData.append('latitude', latitude);
+                    formData.append('longitude', longitude);
+                }
+                
+                // Create appropriate field name based on document type
+                // For documentation: 'dokumentasi_file'
+                // For BPB: 'bpb_file'
+                const fieldName = currentDocumentType === 'bpb' ? 'bpb_file' : 'dokumentasi_file';
+                formData.append(fieldName, blob, 'camera_photo.jpg');
+                
+                // Upload to Express.js API
+                // Route: POST /api/pengiriman/:id/upload-dokumentasi or POST /api/pengiriman/:id/upload-bpb
+                // Map document types to route names
+                const routeName = currentDocumentType === 'documentation' ? 'dokumentasi' : currentDocumentType;
+                fetch(`${getApiBaseUrl()}/pengiriman/${currentShipmentId}/upload-${routeName}`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        showMessage('Foto berhasil disimpan!', 'success');
+                        closeCameraModal();
+                        
+                        // Reload shipments after successful upload
+                        setTimeout(() => {
+                            loadShipments();
+                            closeUploadModal();
+                        }, 1500);
+                    } else {
+                        showMessage('Error: ' + data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showMessage('Terjadi kesalahan saat menyimpan foto. Periksa koneksi jaringan.', 'error');
+                });
+            }, 'image/jpeg');
+        }
+        
+        // Add enhanced watermark to image
+        function addWatermark(context, width, height, latitude, longitude) {
+            // Get current date and time
+            const now = new Date();
+            const dateString = now.toLocaleDateString('id-ID');
+            const timeString = now.toLocaleTimeString('id-ID');
+            
+            // Create watermark sections
+            const nekadText = 'Nekad Express';
+            const dateTimeText = `${dateString} ${timeString}`;
+            
+            // Set font styles
+            context.font = 'bold 24px Arial, Helvetica, sans-serif';
+            const nekadTextWidth = context.measureText(nekadText).width;
+            context.font = 'bold 16px Arial, Helvetica, sans-serif';
+            const dateTimeTextWidth = context.measureText(dateTimeText).width;
+            
+            // Use the wider text width for consistent background
+            const textWidth = Math.max(nekadTextWidth, dateTimeTextWidth);
+            
+            // Position main watermark at top center
+            const padding = 20;
+            const watermarkWidth = textWidth + 40;
+            const watermarkHeight = 70;
+            const x = (width - watermarkWidth) / 2;
+            const y = padding;
+            
+            // Draw semi-transparent background for main watermark
+            context.fillStyle = 'rgba(30, 58, 138, 0.8)';
+            context.fillRect(x, y, watermarkWidth, watermarkHeight);
+            
+            // Draw border for main watermark
+            context.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+            context.lineWidth = 2;
+            context.strokeRect(x, y, watermarkWidth, watermarkHeight);
+            
+            // Draw "Nekad Express" text centered at top
+            context.font = 'bold 24px Arial, Helvetica, sans-serif';
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            context.textAlign = 'center';
+            context.fillText(nekadText, width / 2, y + 30);
+            
+            // Draw date/time text centered below
+            context.font = 'bold 16px Arial, Helvetica, sans-serif';
+            context.fillText(dateTimeText, width / 2, y + 55);
+            
+            // Reset text alignment
+            context.textAlign = 'left';
+            
+            // Add QR placeholder on the left side
+            const qrSize = 60;
+            const qrX = 20;
+            const qrY = height - qrSize - 20;
+            
+            // Draw QR background
+            context.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            context.fillRect(qrX, qrY, qrSize, qrSize);
+            
+            // Draw QR border
+            context.strokeStyle = 'rgba(30, 58, 138, 0.8)';
+            context.lineWidth = 2;
+            context.strokeRect(qrX, qrY, qrSize, qrSize);
+            
+            // Draw QR text
+            context.font = 'bold 12px Arial, Helvetica, sans-serif';
+            context.fillStyle = 'rgba(30, 58, 138, 1)';
+            context.textAlign = 'center';
+            context.fillText('QR', qrX + qrSize / 2, qrY + qrSize / 2 + 4);
+            context.textAlign = 'left';
+            
+            // Add geolocation info on the right side if available
+            if (latitude !== null && longitude !== null) {
+                const geoText = `Lat: ${latitude.toFixed(6)}, Lng: ${longitude.toFixed(6)}`;
+                context.font = '14px Arial, Helvetica, sans-serif';
+                context.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                context.textAlign = 'right';
+                context.fillText(geoText, width - 20, height - 20);
+                context.textAlign = 'left';
+            }
+        }
+        
+        // Close upload modal
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+            currentShipmentId = null;
+            currentShipmentData = null;
+            document.getElementById('uploadMessage').innerHTML = '';
+        }
+        
+        // Show message in modal
+        function showMessage(message, type) {
+            const messageContainer = document.getElementById('uploadMessage');
+            if (type === 'success') {
+                messageContainer.innerHTML = `<div class="success-message">${message}</div>`;
+            } else if (type === 'info') {
+                messageContainer.innerHTML = `<div class="info-message">${message}</div>`;
+            } else {
+                messageContainer.innerHTML = `<div class="error-message-inline">${message}</div>`;
+            }
+        }
+        
+        // Handle file upload
+        function handleFileUpload(event, documentType) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Check if file is an image
+            if (!file.type.startsWith('image/')) {
+                showMessage('File harus berupa gambar (JPG, PNG, dll)', 'error');
+                return;
+            }
+            
+            // Show loading message
+            showMessage('Mengunggah file...', 'info');
+            
+            // Get geolocation if available
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        uploadFileWithLocation(file, documentType, position.coords.latitude, position.coords.longitude);
+                    },
+                    function(error) {
+                        console.error('Geolocation error:', error);
+                        uploadFileWithLocation(file, documentType, null, null);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 60000
+                    }
+                );
+            } else {
+                uploadFileWithLocation(file, documentType, null, null);
+            }
+        }
+        
+        // Upload file with geolocation data
+        function uploadFileWithLocation(file, documentType, latitude, longitude) {
+            // Create canvas to add watermark
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Create image to read file
+            const img = new Image();
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                img.onload = function() {
+                    // Set canvas dimensions
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    // Draw image on canvas
+                    ctx.drawImage(img, 0, 0);
+                    
+                    // Add watermark
+                    addWatermark(ctx, canvas.width, canvas.height, latitude, longitude);
+                    
+                    // Convert to blob
+                    canvas.toBlob(function(blob) {
+                        // Create FormData
+                        const formData = new FormData();
+                        
+                        // Add geolocation data if available
+                        if (latitude !== null && longitude !== null) {
+                            formData.append('latitude', latitude);
+                            formData.append('longitude', longitude);
+                        }
+                        
+                        // Create appropriate field name based on document type
+                        const fieldName = documentType === 'bpb' ? 'bpb_file' : 'dokumentasi_file';
+                        formData.append(fieldName, blob, file.name);
+                        
+                        // Upload to server
+                        const routeName = documentType === 'documentation' ? 'dokumentasi' : documentType;
+                        fetch(`${getApiBaseUrl()}/pengiriman/${currentShipmentId}/upload-${routeName}`, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                showMessage('File berhasil diunggah!', 'success');
+                                
+                                // Reload shipments after successful upload
+                                setTimeout(() => {
+                                    loadShipments();
+                                    closeUploadModal();
+                                }, 1500);
+                            } else {
+                                showMessage('Error: ' + data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showMessage('Terjadi kesalahan saat mengunggah file. Periksa koneksi jaringan.', 'error');
+                        });
+                    }, 'image/jpeg');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load initial shipments
+            loadShipments();
+            
+            // Add search functionality with debounce
+            let searchTimeout;
+            document.getElementById('searchInput').addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchQuery = this.value;
+                searchTimeout = setTimeout(() => {
+                    loadShipments();
+                }, 500); // Debounce for 500ms
+            });
+            
+            // Close viewer modal when clicking outside
+            document.getElementById('viewerModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeViewerModal();
+                }
+            });
+            
+            // Handle orientation change
+            window.addEventListener('orientationchange', function() {
+                setTimeout(() => {
+                    if (cameraStream) {
+                        // Restart camera after orientation change
+                        closeCameraModal();
+                        openCamera(currentDocumentType);
+                    }
+                }, 500);
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (cameraStream) {
+                    // Restart camera after resize
+                    closeCameraModal();
+                    openCamera(currentDocumentType);
+                }
+            });
+        });
+    </script>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="riau.html" class="nav-item active">
+            <i class="fas fa-map-marker-alt nav-icon"></i>
+            <span>Riau</span>
+        </a>
+        <a href="jakarta.html" class="nav-item">
+            <i class="fas fa-city nav-icon"></i>
+            <span>Jakarta</span>
+        </a>
+        <a href="medan.html" class="nav-item">
+            <i class="fas fa-warehouse nav-icon"></i>
+            <span>Medan</span>
+        </a>
+        <a href="history.html" class="nav-item">
+            <i class="fas fa-history nav-icon"></i>
+            <span>Histori</span>
+        </a>
+    </div>
+</body>
+</html>

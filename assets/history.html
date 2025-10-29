@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1e3a8a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Histori Pengiriman">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Histori Pengiriman</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --accent: #60a5fa;
+            --light: #dbeafe;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #0ea5e9;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --safe-area-top: env(safe-area-inset-top);
+            --safe-area-bottom: env(safe-area-inset-bottom);
+        }
+        
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc;
+            color: var(--gray-800);
+            margin: 0;
+            padding: 0;
+            padding-top: var(--safe-area-top);
+            padding-bottom: calc(80px + var(--safe-area-bottom));
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .mobile-container {
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            padding-top: var(--safe-area-top);
+        }
+        
+        /* Responsive container for all screen sizes */
+        @media (max-width: 320px) {
+            .mobile-container {
+                padding: 0 8px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .mobile-container {
+                max-width: 600px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-container {
+                max-width: 800px;
+            }
+        }
+        
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, #2563eb 100%);
+            padding: 1.5rem 1rem;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+            position: relative;
+            overflow: hidden;
+            margin-top: var(--safe-area-top);
+        }
+        
+        .header-gradient::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-text {
+            flex: 1;
+            padding-right: 1rem;
+        }
+        
+        .header-text h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            letter-spacing: -0.02em;
+        }
+        
+        .header-text p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            font-weight: 300;
+        }
+        
+        /* Adjust header for smaller screens */
+        @media (max-width: 360px) {
+            .header-text h1 {
+                font-size: 1.3rem;
+            }
+            
+            .header-text p {
+                font-size: 0.75rem;
+            }
+        }
+        
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .header-icon:hover {
+            transform: scale(1.05);
+        }
+        
+        .header-icon i {
+            color: white;
+            font-size: 1.25rem;
+        }
+        
+        .back-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+            margin-right: 0.5rem;
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.5rem;
+        }
+        
+        /* Adjust section title for smaller screens */
+        @media (max-width: 360px) {
+            .section-title {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        
+        .search-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--gray-200);
+            margin: 0 0.5rem 1.5rem;
+        }
+        
+        .search-bar i {
+            color: var(--gray-400);
+            font-size: 1rem;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            margin-left: 12px;
+            font-size: 1rem;
+            color: var(--gray-800);
+            padding: 4px 0;
+        }
+        
+        .search-bar input::placeholder {
+            color: var(--gray-400);
+        }
+        
+        /* Adjust search bar for smaller screens */
+        @media (max-width: 360px) {
+            .search-bar {
+                padding: 10px 12px;
+                margin: 0 0.25rem 1rem;
+            }
+            
+            .search-bar input {
+                font-size: 0.9rem;
+            }
+        }
+        
+        .shipments-container {
+            margin-top: 1rem;
+            padding: 0 0.5rem;
+        }
+        
+        .shipment-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-100);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            position: relative;
+        }
+        
+        .shipment-item:last-child {
+            border-bottom: none;
+        }
+        
+        .shipment-item:hover {
+            background-color: rgba(59, 130, 246, 0.03);
+        }
+        
+        .shipment-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .shipment-icon.blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--secondary);
+        }
+        
+        .shipment-icon.green {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .shipment-icon.purple {
+            background: rgba(139, 92, 246, 0.1);
+            color: #8b5cf6;
+        }
+        
+        .shipment-icon.yellow {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .shipment-details {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .shipment-details h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--gray-800);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .shipment-details .id {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+        
+        .shipment-details .items {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .shipment-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .shipment-qty {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .shipment-time {
+            font-size: 0.7rem;
+            color: var(--gray-400);
+        }
+        
+        /* Adjust shipment item for smaller screens */
+        @media (max-width: 360px) {
+            .shipment-item {
+                padding: 0.75rem;
+            }
+            
+            .shipment-details h3 {
+                font-size: 0.9rem;
+            }
+            
+            .shipment-details .id,
+            .shipment-details .items {
+                font-size: 0.75rem;
+            }
+            
+            .shipment-qty {
+                font-size: 0.75rem;
+            }
+            
+            .shipment-time {
+                font-size: 0.65rem;
+            }
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        
+        .status-proses {
+            background-color: rgba(251, 191, 36, 0.1);
+            color: #f59e0b;
+        }
+        
+        .status-selesai {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin: 0 0.5rem 1.5rem;
+            overflow: hidden;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 3px solid transparent;
+            font-size: 0.85rem;
+        }
+        
+        .tab.active {
+            color: var(--secondary);
+            border-bottom: 3px solid var(--secondary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .tab:not(.active):hover {
+            background: var(--gray-100);
+        }
+        
+        /* Adjust tabs for smaller screens */
+        @media (max-width: 360px) {
+            .tabs {
+                margin: 0 0.25rem 1rem;
+            }
+            
+            .tab {
+                padding: 8px 0;
+                font-size: 0.8rem;
+            }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-400);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 calc(8px + var(--safe-area-bottom)) 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray-400);
+            font-size: 0.7rem;
+            transition: all 0.2s;
+            padding: 0.5rem;
+            border-radius: 12px;
+            width: 20%;
+        }
+        
+        .nav-item.active {
+            color: var(--secondary);
+        }
+        
+        .nav-item:hover {
+            color: var(--secondary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .nav-icon {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(59, 130, 246, 0.2);
+            border-top: 3px solid var(--secondary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background-color: #fee2e2;
+            color: #ef4444;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Document status indicators */
+        .document-status {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .doc-indicator {
+            display: flex;
+            align-items: center;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            background: var(--gray-100);
+            white-space: nowrap;
+        }
+        
+        .doc-indicator.missing {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        .doc-indicator.complete {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .doc-indicator i {
+            margin-right: 0.25rem;
+            font-size: 0.6rem;
+        }
+        
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 95%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-500);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        
+        .modal-close:hover {
+            background: var(--gray-200);
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .info-label {
+            font-weight: 500;
+            color: var(--gray-600);
+            width: 100px;
+            flex-shrink: 0;
+        }
+        
+        .info-value {
+            flex: 1;
+            color: var(--gray-800);
+        }
+        
+        .preview-container {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .preview-link {
+            background: var(--gray-100);
+            border: none;
+            padding: 0.75rem;
+            border-radius: 12px;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .preview-link:hover {
+            background: var(--gray-200);
+        }
+        
+        .document-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        .document-section h4 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--gray-700);
+        }
+        
+        .success-message {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .info-message {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .error-message-inline {
+            background: #fee2e2;
+            color: #ef4444;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Camera modal styles */
+        .camera-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .camera-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .camera-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        
+        .camera-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .camera-option {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .camera-option.active {
+            background: var(--primary);
+        }
+        
+        .camera-preview {
+            flex: 1;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .capture-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid var(--gray-300);
+            cursor: pointer;
+            margin: 1rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .capture-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .capture-btn-inner {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--danger);
+        }
+        
+        /* Viewer modal styles */
+        .viewer-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .viewer-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .viewer-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        
+        .viewer-image {
+            flex: 1;
+            width: 100%;
+            object-fit: contain;
+            padding: 1rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 360px) {
+            .header-gradient {
+                padding: 1.25rem 0.75rem;
+            }
+            
+            .card {
+                margin: 0.75rem 0.5rem;
+            }
+            
+            .info-row {
+                font-size: 0.85rem;
+            }
+            
+            .info-label {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <div class="header-gradient">
+            <div class="header-content">
+                <button class="back-button" onclick="window.location.href='index.html'">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="header-text">
+                    <h1>Histori Pengiriman</h1>
+                    <p>Data pengiriman hari ini</p>
+                </div>
+                <div class="header-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Cari pengiriman...">
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="all" onclick="switchTab('all')">Semua</div>
+                <div class="tab" data-tab="riau" onclick="switchTab('riau')">Riau</div>
+                <div class="tab" data-tab="jakarta" onclick="switchTab('jakarta')">Jakarta</div>
+                <div class="tab" data-tab="medan" onclick="switchTab('medan')">Medan</div>
+            </div>
+            
+            <div class="shipments-container">
+                <div id="shipmentsList">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Memuat data histori pengiriman...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Viewer Modal -->
+    <div id="viewerModal" class="viewer-modal">
+        <div class="viewer-header">
+            <h3 id="viewerTitle">Dokumen</h3>
+            <button class="modal-close" onclick="closeViewerModal()">&times;</button>
+        </div>
+        <img id="viewerImage" class="viewer-image" src="" alt="Document Preview">
+    </div>
+    
+    <script>
+        // Configuration
+        const CONFIG = {
+            // API endpoint - Update this to match your server IP when accessing from mobile devices
+            API_BASE_URL: 'https://irisout.nekadbanget.com/api', // Change this to your server's IP address
+            
+            // Fallback URLs for different environments
+            API_FALLBACK_URLS: [
+                'https://irisout.nekadbanget.com/api',
+                'https://irisout.nekadbanget.com/api',
+                'https://irisout.nekadbanget.com/api' // Replace with your actual server IP
+            ],
+            
+            // Retry settings
+            MAX_RETRIES: 3,
+            RETRY_DELAY: 1000 // ms
+        };
+        
+        // Current active tab
+        let currentTab = 'all';
+        let searchQuery = '';
+        
+        // Get API base URL with fallback support
+        function getApiBaseUrl() {
+            return CONFIG.API_BASE_URL;
+        }
+        
+        // Switch between tabs
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update active tab UI
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Load shipments for the selected tab
+            loadShipments();
+        }
+        
+        // Format quantity
+        function formatQty(qty) {
+            return qty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        
+        // Load shipments from Express.js API (only today's shipments)
+        function loadShipments() {
+            const shipmentsList = document.getElementById('shipmentsList');
+            
+            // Show loading state
+            shipmentsList.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Memuat data histori pengiriman...</p>
+                </div>
+            `;
+            
+            // Build API URL with parameters - only today's shipments
+            let url = `${getApiBaseUrl()}/mobile/pengiriman?tab=${currentTab}&filter=today`;
+            if (searchQuery) {
+                url += '&search=' + encodeURIComponent(searchQuery);
+            }
+            
+            // Fetch data from Express.js API
+            fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    renderShipments(data.data, shipmentsList);
+                } else {
+                    shipmentsList.innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Gagal memuat data: ${data.message}</p>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                shipmentsList.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Gagal memuat data histori pengiriman. Silakan periksa koneksi jaringan dan pastikan server API berjalan.</p>
+                        <p class="text-sm mt-2">Detail error: ${error.message}</p>
+                    </div>
+                `;
+            });
+        }
+        
+        // Render shipments to the DOM
+        function renderShipments(shipments, container) {
+            if (shipments.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <h3>Tidak Ada Histori</h3>
+                        <p>Belum ada pengiriman hari ini</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            shipments.forEach((shipment, index) => {
+                // Determine icon color based on index
+                const iconColors = ['blue', 'green', 'purple', 'yellow'];
+                const iconColor = iconColors[index % iconColors.length];
+                
+                html += `
+                    <div class="card">
+                        <div class="shipment-item">
+                            <div class="shipment-icon ${iconColor}">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="shipment-details">
+                                <h3>${shipment.toko}</h3>
+                                <p class="id">ID: ${shipment.id}</p>
+                                <p class="items">${shipment.produk} - ${shipment.jenis}</p>
+                                <div class="document-status">
+                                    <span class="doc-indicator ${shipment.missing_bpb ? 'missing' : 'complete'}">
+                                        <i class="fas ${shipment.missing_bpb ? 'fa-times' : 'fa-check'}"></i>
+                                        BPB
+                                    </span>
+                                    <span class="doc-indicator ${shipment.missing_documentation ? 'missing' : 'complete'}">
+                                        <i class="fas ${shipment.missing_documentation ? 'fa-times' : 'fa-check'}"></i>
+                                        Dokumen
+                                    </span>
+                                </div>
+                                <span class="status-badge status-${shipment.status}">${shipment.status === 'proses' ? 'Proses' : shipment.status === 'terkirim' ? 'Terkirim' : 'Selesai'}</span>
+                            </div>
+                            <div class="shipment-meta">
+                                <div class="shipment-qty">${formatQty(shipment.qty)} item</div>
+                                <div class="shipment-time">${shipment.time}</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Document previews -->
+                        <div style="padding: 0 1rem 1rem;">
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                ${shipment.bpb_url ? `
+                                <div style="flex: 1; min-width: 120px;">
+                                    <strong>BPB:</strong>
+                                    <div style="margin-top: 0.5rem;">
+                                        <button class="preview-link" onclick="viewDocument('${shipment.bpb_url}', 'BPB')">
+                                            <i class="fas fa-eye"></i> Lihat
+                                        </button>
+                                    </div>
+                                </div>
+                                ` : `
+                                <div style="flex: 1; min-width: 120px;">
+                                    <strong>BPB:</strong>
+                                    <div style="margin-top: 0.5rem; color: var(--gray-400);">
+                                        <i class="fas fa-times-circle"></i> Tidak ada
+                                    </div>
+                                </div>
+                                `}
+                                
+                                ${shipment.documentation_url ? `
+                                <div style="flex: 1; min-width: 120px;">
+                                    <strong>Dokumen:</strong>
+                                    <div style="margin-top: 0.5rem;">
+                                        <button class="preview-link" onclick="viewDocument('${shipment.documentation_url}', 'Dokumentasi')">
+                                            <i class="fas fa-eye"></i> Lihat
+                                        </button>
+                                    </div>
+                                </div>
+                                ` : `
+                                <div style="flex: 1; min-width: 120px;">
+                                    <strong>Dokumen:</strong>
+                                    <div style="margin-top: 0.5rem; color: var(--gray-400);">
+                                        <i class="fas fa-times-circle"></i> Tidak ada
+                                    </div>
+                                </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // View document in modal
+        function viewDocument(url, title) {
+            document.getElementById('viewerTitle').textContent = title;
+            document.getElementById('viewerImage').src = url;
+            document.getElementById('viewerModal').classList.add('active');
+        }
+        
+        // Close viewer modal
+        function closeViewerModal() {
+            document.getElementById('viewerModal').classList.remove('active');
+            document.getElementById('viewerImage').src = '';
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load initial shipments
+            loadShipments();
+            
+            // Add search functionality with debounce
+            let searchTimeout;
+            document.getElementById('searchInput').addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchQuery = this.value;
+                searchTimeout = setTimeout(() => {
+                    loadShipments();
+                }, 500); // Debounce for 500ms
+            });
+            
+            // Close viewer modal when clicking outside
+            document.getElementById('viewerModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeViewerModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
